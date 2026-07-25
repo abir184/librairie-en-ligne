@@ -1,0 +1,13 @@
+{
+  "accueil": {
+    "titre": "Online Bookstore",
+    "accroche": "Discover your next great read",
+    "sousTitre": "Explore thousands of books across every genre.",
+    "bouton": "Browse categories"
+  },
+  "nav": {
+    "catalogue": "Catalogue",
+    "panier": "Cart",
+    "monCompte": "My account"
+  }
+}
