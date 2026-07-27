@@ -1,6 +1,9 @@
 import { PrismaClient } from '../generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import * as bcrypt from 'bcryptjs';
+import type { Livre, Client } from '../generated/prisma/client';
+// ... (garde les autres imports existants)
+
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -38,7 +41,8 @@ async function main() {
   );
 
   console.log('Création de 50 livres...');
-  const livres = [];
+  
+const livres: Livre[] = [];
   for (let i = 1; i <= 50; i++) {
     const livre = await prisma.livre.create({
       data: {
@@ -54,7 +58,7 @@ async function main() {
   }
 
   console.log('Création de 5 clients de test...');
-  const clients = [];
+  const clients: Client[] = [];
   for (let i = 1; i <= 5; i++) {
     const hashedPassword = await bcrypt.hash('motdepasse123', 10);
     const client = await prisma.client.create({
