@@ -20,6 +20,10 @@ create(@Request() req, @Body() createCommandeDto: CreateCommandeDto) {
     return this.commandeService.findAll();
   }
 
+  @Get('dashboard-stats')
+getDashboardStats() {
+  return this.commandeService.getDashboardStats();
+}
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.commandeService.findOne(+id);

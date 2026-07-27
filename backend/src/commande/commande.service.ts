@@ -57,6 +57,47 @@ export class CommandeService {
       include: { client: true, lignes: { include: { livre: true } } },
     });
   }
+  async getDashboardStats() {
+  const debutJour = new Date();
+  debutJour.setHours(0, 0, 0, 0);
+
+  const debutMois = new Date();
+  debutMois.setDate(1);
+  debutMois.setHours(0, 0, 0, 0);
+
+  const commandesDuJour = await this.prisma.commande.count({
+    where: { createdAt: { gte: debutJour } },
+  });
+
+  const commandesDuMois = await this.prisma.commande.findMany({
+    where: {
+      createdAt: { gte: debutMois },
+      statut: { not: 'annulee' },
+    },
+    include: { lignes: true },
+  });
+
+  const chiffreAffairesMois = commandesDuMois.reduce((total, commande) => {
+    const totalCommande = commande.lignes.reduce(
+      (sum, ligne) => sum + ligne.prixUnitaire * ligne.quantite,
+      0,
+    );
+    return total + totalCommande;
+  }, 0);
+
+  const SEUIL_STOCK_FAIBLE = 20;
+  const livresStockFaible = await this.prisma.livre.findMany({
+    where: { stock: { lt: SEUIL_STOCK_FAIBLE } },
+    select: { id: true, titre: true, stock: true },
+    orderBy: { stock: 'asc' },
+  });
+
+  return {
+    commandesDuJour,
+    chiffreAffairesMois: parseFloat(chiffreAffairesMois.toFixed(2)),
+    livresStockFaible,
+  };
+}
 
   findOne(id: number) {
     return this.prisma.commande.findUnique({
