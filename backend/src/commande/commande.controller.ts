@@ -2,15 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CommandeService } from './commande.service';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
+import { UseGuards, Request } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('commande')
 export class CommandeController {
   constructor(private readonly commandeService: CommandeService) {}
 
-  @Post()
-  create(@Body() createCommandeDto: CreateCommandeDto) {
-    return this.commandeService.create(createCommandeDto);
-  }
+  @UseGuards(JwtAuthGuard)
+@Post()
+create(@Request() req, @Body() createCommandeDto: CreateCommandeDto) {
+  return this.commandeService.create(req.user.id, createCommandeDto);
+}
 
   @Get()
   findAll() {
@@ -21,7 +24,10 @@ export class CommandeController {
   findOne(@Param('id') id: string) {
     return this.commandeService.findOne(+id);
   }
-
+@Patch(':id/statut')
+updateStatut(@Param('id') id: string, @Body('statut') statut: string) {
+  return this.commandeService.updateStatut(+id, statut);
+}
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCommandeDto: UpdateCommandeDto) {
     return this.commandeService.update(+id, updateCommandeDto);

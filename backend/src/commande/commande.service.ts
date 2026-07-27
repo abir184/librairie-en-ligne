@@ -7,12 +7,11 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 export class CommandeService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createCommandeDto: CreateCommandeDto) {
+  async create(clientId: number, createCommandeDto: CreateCommandeDto) {
   return this.prisma.$transaction(async (tx) => {
     const livreIds = createCommandeDto.lignes.map((l) => l.livreId);
     const livres = await tx.livre.findMany({ where: { id: { in: livreIds } } });
 
-    // Vérifie que chaque livre existe ET que le stock est suffisant
     for (const ligne of createCommandeDto.lignes) {
       const livre = livres.find((l) => l.id === ligne.livreId);
       if (!livre) {
@@ -27,7 +26,7 @@ export class CommandeService {
 
     const commande = await tx.commande.create({
       data: {
-        clientId: createCommandeDto.clientId,
+        clientId,
         lignes: {
           create: createCommandeDto.lignes.map((ligne) => {
             const livre = livres.find((l) => l.id === ligne.livreId)!;
@@ -51,7 +50,7 @@ export class CommandeService {
 
     return commande;
   });
-}
+  }
 
   findAll() {
     return this.prisma.commande.findMany({
@@ -72,6 +71,43 @@ export class CommandeService {
       data: updateCommandeDto,
     });
   }
+async updateStatut(id: number, nouveauStatut: string) {
+  return this.prisma.$transaction(async (tx) => {
+    const commande = await tx.commande.findUnique({
+      where: { id },
+      include: { lignes: true },
+    });
+
+    if (!commande) {
+      throw new NotFoundException(`Commande ${id} introuvable`);
+    }
+
+    if (
+      nouveauStatut === 'annulee' &&
+      commande.statut === 'livree'
+    ) {
+      throw new BadRequestException(
+        'Impossible d\'annuler une commande déjà livrée',
+      );
+    }
+
+    // Restitution du stock si on passe à "annulee" depuis un autre statut
+    if (nouveauStatut === 'annulee' && commande.statut !== 'annulee') {
+      for (const ligne of commande.lignes) {
+        await tx.livre.update({
+          where: { id: ligne.livreId },
+          data: { stock: { increment: ligne.quantite } },
+        });
+      }
+    }
+
+    return tx.commande.update({
+      where: { id },
+      data: { statut: nouveauStatut },
+      include: { lignes: { include: { livre: true } } },
+    });
+  });
+}
 
   remove(id: number) {
     return this.prisma.commande.delete({ where: { id } });
