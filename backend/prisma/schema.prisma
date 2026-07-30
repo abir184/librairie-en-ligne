@@ -25,11 +25,10 @@ model Livre {
   prix        Float
   stock       Int          @default(0)
   description String?
+  couverture  String?
   createdAt   DateTime     @default(now())
-
   categorieId Int?
   categorie   Categorie?   @relation(fields: [categorieId], references: [id])
-
   lignesCommande LigneCommande[]
 }
 

@@ -7,9 +7,14 @@ import { CategorieModule } from './categorie/categorie.module';
 import { ClientModule } from './client/client.module';
 import { CommandeModule } from './commande/commande.module';
 import { AuthModule } from './auth/auth.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [LivreModule, PrismaModule, CategorieModule, ClientModule, CommandeModule, AuthModule],
+  imports: [LivreModule, PrismaModule, CategorieModule, ClientModule, CommandeModule, AuthModule , ServeStaticModule.forRoot({
+  rootPath: join(process.cwd(), 'uploads'),
+  serveRoot: '/uploads',
+}),],
   controllers: [AppController],
   providers: [AppService],
 })

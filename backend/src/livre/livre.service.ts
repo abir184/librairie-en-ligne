@@ -29,6 +29,13 @@ export class LivreService {
     });
   }
 
+  updateCouverture(id: number, cheminCouverture: string) {
+  return this.prisma.livre.update({
+    where: { id },
+    data: { couverture: cheminCouverture },
+  });
+}
+
   remove(id: number) {
     return this.prisma.livre.delete({ where: { id } });
   }
