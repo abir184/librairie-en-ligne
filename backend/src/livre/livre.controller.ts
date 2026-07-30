@@ -6,6 +6,15 @@ import { UseInterceptors, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { Query } from '@nestjs/common';
+import { ApiQuery } from '@nestjs/swagger';
+
+// ...
+
+@ApiQuery({ name: 'recherche', required: false })
+@ApiQuery({ name: 'categorieId', required: false })
+@ApiQuery({ name: 'page', required: false })
+@ApiQuery({ name: 'limit', required: false })
 
 @Controller('livre')
 export class LivreController {
@@ -17,9 +26,19 @@ export class LivreController {
   }
 
   @Get()
-  findAll() {
-    return this.livreService.findAll();
-  }
+findAll(
+  @Query('recherche') recherche?: string,
+  @Query('categorieId') categorieId?: string,
+  @Query('page') page?: string,
+  @Query('limit') limit?: string,
+) {
+  return this.livreService.findAll({
+    recherche,
+    categorieId: categorieId ? +categorieId : undefined,
+    page: page ? +page : undefined,
+    limit: limit ? +limit : undefined,
+  });
+}
 
   @Get(':id')
   findOne(@Param('id') id: string) {

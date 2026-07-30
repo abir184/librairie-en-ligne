@@ -11,9 +11,30 @@ export class LivreService {
     return this.prisma.livre.create({ data: createLivreDto });
   }
 
-  findAll() {
-    return this.prisma.livre.findMany({ include: { categorie: true } });
+  findAll(params: { recherche?: string; categorieId?: number; page?: number; limit?: number }) {
+  const { recherche, categorieId, page = 1, limit = 20 } = params;
+
+  const where: any = {};
+
+  if (recherche) {
+  where.OR = [
+    { titre: { contains: recherche, mode: 'insensitive' as const } },
+    { auteur: { contains: recherche, mode: 'insensitive' as const } },
+  ];
+}
+
+  if (categorieId) {
+    where.categorieId = categorieId;
   }
+
+  return this.prisma.livre.findMany({
+    where,
+    include: { categorie: true },
+    skip: (page - 1) * limit,
+    take: limit,
+    orderBy: { createdAt: 'desc' },
+  });
+}
 
   findOne(id: number) {
     return this.prisma.livre.findUnique({
