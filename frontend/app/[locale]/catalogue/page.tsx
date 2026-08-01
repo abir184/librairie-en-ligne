@@ -1,3 +1,4 @@
+import Link from 'next/link';
 interface Livre {
   id: number;
   titre: string;
@@ -41,7 +42,11 @@ export default async function CataloguePage({
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {livres.map((livre) => (
-            <div key={livre.id} className="border border-slate-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+            <Link
+  key={livre.id}
+  href={`/livre/${livre.id}`}
+  className="border border-slate-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow block"
+>
               <div className="bg-slate-100 h-48 flex items-center justify-center text-slate-400 text-sm">
                 {livre.couverture ? (
                   <img
@@ -65,7 +70,7 @@ export default async function CataloguePage({
                   {livre.prix.toFixed(2)} DT
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
