@@ -5,6 +5,7 @@ import { routing } from '../../i18n/routing';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import "./globals.css";
+import { AuthProvider } from '../context/AuthContext';
 
 export const metadata: Metadata = {
   title: "Librairie en ligne",
@@ -30,10 +31,12 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dir}>
       <body className="min-h-screen flex flex-col bg-white text-slate-900">
         <NextIntlClientProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
+  <AuthProvider>
+    <Header />
+    <main className="flex-1">{children}</main>
+    <Footer />
+  </AuthProvider>
+</NextIntlClientProvider>
       </body>
     </html>
   );
