@@ -26,6 +26,12 @@ create(@Request() req, @Body() createCommandeDto: CreateCommandeDto) {
 getDashboardStats() {
   return this.commandeService.getDashboardStats();
 }
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Get('mes-commandes')
+findMesCommandes(@Request() req) {
+  return this.commandeService.findByClient(req.user.id);
+}
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.commandeService.findOne(+id);

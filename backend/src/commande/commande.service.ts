@@ -57,6 +57,13 @@ export class CommandeService {
       include: { client: true, lignes: { include: { livre: true } } },
     });
   }
+  findByClient(clientId: number) {
+  return this.prisma.commande.findMany({
+    where: { clientId },
+    include: { lignes: { include: { livre: true } } },
+    orderBy: { createdAt: 'desc' },
+  });
+}
   async getDashboardStats() {
   const debutJour = new Date();
   debutJour.setHours(0, 0, 0, 0);
