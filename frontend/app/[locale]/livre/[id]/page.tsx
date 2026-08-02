@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { BoutonAjouterPanier } from '../../../components/BoutonAjouterPanier';
+
 
 interface Livre {
   id: number;
@@ -77,12 +79,16 @@ export default async function FicheLivrePage({
             </p>
           )}
 
-          <button
-            disabled={livre.stock === 0}
-            className="bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-8 py-3 rounded-md font-medium transition-colors mt-4"
-          >
-            Ajouter au panier
-          </button>
+          <BoutonAjouterPanier
+  livre={{
+    id: livre.id,
+    titre: livre.titre,
+    auteur: livre.auteur,
+    prix: livre.prix,
+    couverture: livre.couverture,
+  }}
+  stock={livre.stock}
+/>
         </div>
       </div>
     </div>

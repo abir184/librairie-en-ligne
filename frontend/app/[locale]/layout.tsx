@@ -6,6 +6,8 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import "./globals.css";
 import { AuthProvider } from '../context/AuthContext';
+import { CartProvider } from '../context/CartContext';
+
 
 export const metadata: Metadata = {
   title: "Librairie en ligne",
@@ -32,9 +34,11 @@ export default async function LocaleLayout({
       <body className="min-h-screen flex flex-col bg-white text-slate-900">
         <NextIntlClientProvider>
   <AuthProvider>
-    <Header />
-    <main className="flex-1">{children}</main>
-    <Footer />
+    <CartProvider>
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </CartProvider>
   </AuthProvider>
 </NextIntlClientProvider>
       </body>
