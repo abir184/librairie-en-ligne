@@ -28,6 +28,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             >
               Commandes
             </Link>
+            <Link
+  href="/admin/clients"
+  className="block px-4 py-3 rounded-md text-slate-700 hover:bg-indigo-50 hover:text-indigo-900"
+>
+  Clients
+</Link>
           </nav>
         </div>
 
