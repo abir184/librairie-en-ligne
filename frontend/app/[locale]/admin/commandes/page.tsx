@@ -31,12 +31,18 @@ export default function AdminCommandesPage() {
   const [chargement, setChargement] = useState(true);
 
   const chargerCommandes = () => {
-    setChargement(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/commande`)
-      .then((res) => res.json())
-      .then(setCommandes)
-      .finally(() => setChargement(false));
-  };
+  setChargement(true);
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/commande`)
+    .then((res) => {
+      if (!res.ok) throw new Error('Erreur de chargement');
+      return res.json();
+    })
+    .then((data) => {
+      setCommandes(Array.isArray(data) ? data : []);
+    })
+    .catch(() => setCommandes([]))
+    .finally(() => setChargement(false));
+};
 
   useEffect(() => {
     chargerCommandes();
