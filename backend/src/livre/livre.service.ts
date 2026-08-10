@@ -2,15 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateLivreDto } from './dto/create-livre.dto';
 import { UpdateLivreDto } from './dto/update-livre.dto';
+import { IaService } from '../ia/ia.service';
 
 @Injectable()
 export class LivreService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+  private prisma: PrismaService,
+  private iaService: IaService,
+) {}
 
-  create(createLivreDto: CreateLivreDto) {
-    return this.prisma.livre.create({ data: createLivreDto });
-  }
+  async create(createLivreDto: CreateLivreDto) {
+  const livre = await this.prisma.livre.create({ data: createLivreDto });
 
+  // Génération du résumé IA en arrière-plan, sans bloquer la réponse
+  this.iaService
+    .genererResume(livre.titre, livre.auteur, livre.description || '')
+    .then((resume) => {
+      if (resume) {
+        return this.prisma.livre.update({
+          where: { id: livre.id },
+          data: { resumeIA: resume },
+        });
+      }
+    })
+    .catch(() => {
+      // Le livre reste publié même si l'IA échoue, comme prévu dans les règles de gestion
+    });
+
+  return livre;
+}
   findAll(params: { recherche?: string; categorieId?: number; page?: number; limit?: number }) {
   const { recherche, categorieId, page = 1, limit = 20 } = params;
 
