@@ -9,12 +9,13 @@ import { CommandeModule } from './commande/commande.module';
 import { AuthModule } from './auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { IaModule } from './ia/ia.module';
 
 @Module({
   imports: [LivreModule, PrismaModule, CategorieModule, ClientModule, CommandeModule, AuthModule , ServeStaticModule.forRoot({
   rootPath: join(process.cwd(), 'uploads'),
   serveRoot: '/uploads',
-}),],
+}), IaModule,],
   controllers: [AppController],
   providers: [AppService],
 })
