@@ -7,7 +7,69 @@
   },
   "nav": {
     "catalogue": "Catalogue",
+    "meilleuresVentes": "Bestsellers",
+    "nouveautes": "New arrivals",
     "panier": "Cart",
-    "monCompte": "My account"
+    "compte": "Account",
+    "rechercher": "Search books, authors..."
+  },
+  "bandeau": {
+    "paiement": "Cash on delivery only"
+  },
+  "catalogue": {
+    "titre": "Catalogue",
+    "aucunLivre": "No books found.",
+    "pasDeCouverture": "No cover"
+  },
+  "fiche": {
+    "retour": "Back to catalogue",
+    "par": "by",
+    "enStock": "In stock",
+    "disponibles": "available",
+    "ruptureStock": "Out of stock",
+    "ajouterPanier": "Add to cart",
+    "ajoute": "Added to cart"
+  },
+  "panier": {
+    "titre": "Cart",
+    "vide": "Your cart is empty",
+    "videTexte": "Browse our catalogue to find your next read.",
+    "continuerAchats": "Continue shopping",
+    "resume": "Order summary",
+    "sousTotal": "Subtotal",
+    "livraison": "Shipping",
+    "gratuite": "Free",
+    "total": "Total",
+    "passerCommande": "Proceed to checkout",
+    "supprimer": "Remove"
+  },
+  "commande": {
+    "titre": "Checkout",
+    "connexionRequise": "Login required",
+    "connexionTexte": "You must be logged in to place an order.",
+    "seConnecter": "Log in",
+    "recapitulatif": "Summary",
+    "totalLivraison": "Total to pay on delivery",
+    "paiementInfo": "Cash payment directly to the delivery person upon receiving your order.",
+    "confirmer": "Confirm order",
+    "confirmee": "Order confirmed!",
+    "merci": "Thank you, your order has been registered."
+  },
+  "compte": {
+    "titre": "My account",
+    "deconnexion": "Log out",
+    "profil": "My profile",
+    "commandes": "My orders",
+    "aucuneCommande": "You haven't placed any orders yet."
+  },
+  "connexion": {
+    "titre": "Login",
+    "email": "Email address",
+    "motDePasse": "Password",
+    "seConnecter": "Log in",
+    "erreur": "Incorrect email or password"
+  },
+  "divers": {
+    "chargement": "Loading..."
   }
 }

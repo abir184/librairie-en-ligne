@@ -1,25 +1,27 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useCart } from '../../context/CartContext';
 
 export default function PanierPage() {
+  const t = useTranslations();
   const { items, removeFromCart, updateQuantite, getTotal, getItemCount } = useCart();
 
   if (items.length === 0) {
     return (
       <div className="container mx-auto px-4 py-20 bg-white min-h-screen text-center">
         <h1 className="text-3xl font-serif font-semibold text-indigo-950 mb-4">
-          Votre panier est vide
+          {t('panier.vide')}
         </h1>
         <p className="text-slate-600 mb-8">
-          Parcourez notre catalogue pour trouver votre prochaine lecture.
+          {t('panier.videTexte')}
         </p>
         <Link
           href="/catalogue"
           className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white px-8 py-3 rounded-md font-medium transition-colors"
         >
-          Continuer les achats
+          {t('panier.continuerAchats')}
         </Link>
       </div>
     );
@@ -28,7 +30,7 @@ export default function PanierPage() {
   return (
     <div className="container mx-auto px-4 py-12 bg-white min-h-screen">
       <h1 className="text-3xl font-serif font-semibold text-indigo-950 mb-8">
-        Panier ({getItemCount()} article{getItemCount() > 1 ? 's' : ''})
+        {t('panier.titre')} ({getItemCount()} {getItemCount() > 1 ? 'articles' : 'article'})
       </h1>
 
       <div className="grid lg:grid-cols-3 gap-8">
@@ -43,13 +45,13 @@ export default function PanierPage() {
                     className="w-full h-full object-cover rounded"
                   />
                 ) : (
-                  'Pas d\'image'
+                  t('catalogue.pasDeCouverture')
                 )}
               </div>
 
               <div className="flex-1">
                 <h3 className="font-semibold text-slate-900">{item.livre.titre}</h3>
-                <p className="text-sm text-slate-500">par {item.livre.auteur}</p>
+                <p className="text-sm text-slate-500">{t('fiche.par')} {item.livre.auteur}</p>
 
                 <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center border border-slate-300 rounded-md">
@@ -76,7 +78,7 @@ export default function PanierPage() {
                       onClick={() => removeFromCart(item.livre.id)}
                       className="text-red-600 hover:text-red-700 text-sm"
                     >
-                      Supprimer
+                      {t('panier.supprimer')}
                     </button>
                   </div>
                 </div>
@@ -86,24 +88,24 @@ export default function PanierPage() {
         </div>
 
         <div className="border border-slate-200 rounded-lg p-6 h-fit space-y-4">
-          <h2 className="font-semibold text-lg text-slate-900">Résumé de la commande</h2>
+          <h2 className="font-semibold text-lg text-slate-900">{t('panier.resume')}</h2>
           <div className="flex justify-between text-slate-600">
-            <span>Sous-total</span>
+            <span>{t('panier.sousTotal')}</span>
             <span>{getTotal().toFixed(2)} DT</span>
           </div>
           <div className="flex justify-between text-slate-600">
-            <span>Livraison</span>
-            <span className="text-green-700">Gratuite</span>
+            <span>{t('panier.livraison')}</span>
+            <span className="text-green-700">{t('panier.gratuite')}</span>
           </div>
           <div className="border-t border-slate-200 pt-4 flex justify-between font-semibold text-lg text-indigo-950">
-            <span>Total</span>
+            <span>{t('panier.total')}</span>
             <span>{getTotal().toFixed(2)} DT</span>
           </div>
           <Link
             href="/commande"
             className="block text-center bg-indigo-900 hover:bg-indigo-800 text-white px-6 py-3 rounded-md font-medium transition-colors"
           >
-            Passer à la commande
+            {t('panier.passerCommande')}
           </Link>
         </div>
       </div>

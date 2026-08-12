@@ -7,7 +7,69 @@
   },
   "nav": {
     "catalogue": "الفهرس",
+    "meilleuresVentes": "الأكثر مبيعاً",
+    "nouveautes": "الجديد",
     "panier": "السلة",
-    "monCompte": "حسابي"
+    "compte": "حسابي",
+    "rechercher": "ابحث عن كتب، مؤلفين..."
+  },
+  "bandeau": {
+    "paiement": "الدفع عند الاستلام فقط"
+  },
+  "catalogue": {
+    "titre": "الفهرس",
+    "aucunLivre": "لم يتم العثور على كتب.",
+    "pasDeCouverture": "لا يوجد غلاف"
+  },
+  "fiche": {
+    "retour": "العودة إلى الفهرس",
+    "par": "بقلم",
+    "enStock": "متوفر",
+    "disponibles": "متاح",
+    "ruptureStock": "غير متوفر",
+    "ajouterPanier": "أضف إلى السلة",
+    "ajoute": "تمت الإضافة إلى السلة"
+  },
+  "panier": {
+    "titre": "السلة",
+    "vide": "سلتك فارغة",
+    "videTexte": "تصفح فهرسنا للعثور على قراءتك القادمة.",
+    "continuerAchats": "متابعة التسوق",
+    "resume": "ملخص الطلب",
+    "sousTotal": "المجموع الفرعي",
+    "livraison": "التوصيل",
+    "gratuite": "مجاني",
+    "total": "المجموع",
+    "passerCommande": "إتمام الطلب",
+    "supprimer": "حذف"
+  },
+  "commande": {
+    "titre": "إتمام الطلب",
+    "connexionRequise": "تسجيل الدخول مطلوب",
+    "connexionTexte": "يجب تسجيل الدخول لإتمام الطلب.",
+    "seConnecter": "تسجيل الدخول",
+    "recapitulatif": "ملخص",
+    "totalLivraison": "المجموع المستحق عند التسليم",
+    "paiementInfo": "الدفع نقداً مباشرة لعامل التوصيل عند استلام طلبك.",
+    "confirmer": "تأكيد الطلب",
+    "confirmee": "تم تأكيد الطلب!",
+    "merci": "شكراً لك، تم تسجيل طلبك بنجاح."
+  },
+  "compte": {
+    "titre": "حسابي",
+    "deconnexion": "تسجيل الخروج",
+    "profil": "ملفي الشخصي",
+    "commandes": "طلباتي",
+    "aucuneCommande": "لم تقم بأي طلب بعد."
+  },
+  "connexion": {
+    "titre": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "motDePasse": "كلمة المرور",
+    "seConnecter": "تسجيل الدخول",
+    "erreur": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  },
+  "divers": {
+    "chargement": "Chargement..."
   }
 }

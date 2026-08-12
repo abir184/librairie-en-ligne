@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 interface Livre {
   id: number;
   titre: string;
@@ -28,17 +29,18 @@ export default async function CataloguePage({
 }: {
   searchParams: Promise<{ recherche?: string; categorieId?: string; page?: string }>;
 }) {
+  const t = await getTranslations();
   const params = await searchParams;
   const livres = await getLivres(params);
 
   return (
     <div className="container mx-auto px-4 py-12 bg-white min-h-screen">
       <h1 className="text-3xl font-serif font-semibold text-indigo-950 mb-8">
-        Catalogue
-      </h1>
+  {t('catalogue.titre')}
+</h1>
 
       {livres.length === 0 ? (
-        <p className="text-slate-600">Aucun livre trouvé.</p>
+        <p className="text-slate-600">{t('catalogue.aucunLivre')}</p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {livres.map((livre) => (
@@ -55,7 +57,7 @@ export default async function CataloguePage({
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  'Pas de couverture'
+                  t('catalogue.pasDeCouverture')
                 )}
               </div>
               <div className="p-4 space-y-1">

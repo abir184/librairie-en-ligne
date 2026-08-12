@@ -7,7 +7,69 @@
   },
   "nav": {
     "catalogue": "Catalogue",
+    "meilleuresVentes": "Meilleures ventes",
+    "nouveautes": "Nouveautés",
     "panier": "Panier",
-    "monCompte": "Mon compte"
+    "compte": "Compte",
+    "rechercher": "Rechercher des livres, auteurs..."
+  },
+  "bandeau": {
+    "paiement": "Paiement à la livraison uniquement"
+  },
+  "catalogue": {
+    "titre": "Catalogue",
+    "aucunLivre": "Aucun livre trouvé.",
+    "pasDeCouverture": "Pas de couverture"
+  },
+  "fiche": {
+    "retour": "Retour au catalogue",
+    "par": "par",
+    "enStock": "En stock",
+    "disponibles": "disponibles",
+    "ruptureStock": "Rupture de stock",
+    "ajouterPanier": "Ajouter au panier",
+    "ajoute": "Ajouté au panier"
+  },
+  "panier": {
+    "titre": "Panier",
+    "vide": "Votre panier est vide",
+    "videTexte": "Parcourez notre catalogue pour trouver votre prochaine lecture.",
+    "continuerAchats": "Continuer les achats",
+    "resume": "Résumé de la commande",
+    "sousTotal": "Sous-total",
+    "livraison": "Livraison",
+    "gratuite": "Gratuite",
+    "total": "Total",
+    "passerCommande": "Passer à la commande",
+    "supprimer": "Supprimer"
+  },
+  "commande": {
+    "titre": "Finaliser la commande",
+    "connexionRequise": "Connexion requise",
+    "connexionTexte": "Vous devez être connecté(e) pour passer une commande.",
+    "seConnecter": "Se connecter",
+    "recapitulatif": "Récapitulatif",
+    "totalLivraison": "Total à payer à la livraison",
+    "paiementInfo": "Paiement en espèces directement auprès du livreur, à la réception de votre commande.",
+    "confirmer": "Confirmer la commande",
+    "confirmee": "Commande confirmée !",
+    "merci": "Merci, votre commande a bien été enregistrée."
+  },
+  "compte": {
+    "titre": "Mon espace client",
+    "deconnexion": "Se déconnecter",
+    "profil": "Mon profil",
+    "commandes": "Mes commandes",
+    "aucuneCommande": "Vous n'avez pas encore passé de commande."
+  },
+  "connexion": {
+    "titre": "Connexion",
+    "email": "Adresse e-mail",
+    "motDePasse": "Mot de passe",
+    "seConnecter": "Se connecter",
+    "erreur": "Email ou mot de passe incorrect"
+  },
+  "divers": {
+    "chargement": "Chargement..."
   }
 }

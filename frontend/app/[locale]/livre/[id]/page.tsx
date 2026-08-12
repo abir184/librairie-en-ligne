@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BoutonAjouterPanier } from '../../../components/BoutonAjouterPanier';
-
+import { getTranslations } from 'next-intl/server';
 
 interface Livre {
   id: number;
@@ -27,6 +27,7 @@ export default async function FicheLivrePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = await getTranslations();
   const { id } = await params;
   const livre = await getLivre(id);
 
@@ -37,7 +38,7 @@ export default async function FicheLivrePage({
   return (
     <div className="container mx-auto px-4 py-12 bg-white min-h-screen">
       <Link href="/catalogue" className="text-indigo-700 hover:underline text-sm mb-6 inline-block">
-        ← Retour au catalogue
+        ← {t('fiche.retour')}
       </Link>
 
       <div className="grid md:grid-cols-2 gap-12">
@@ -49,7 +50,7 @@ export default async function FicheLivrePage({
               className="w-full h-full object-cover rounded-lg"
             />
           ) : (
-            'Pas de couverture'
+            t('catalogue.pasDeCouverture')
           )}
         </div>
 
@@ -57,7 +58,7 @@ export default async function FicheLivrePage({
           <h1 className="text-3xl font-serif font-semibold text-indigo-950">
             {livre.titre}
           </h1>
-          <p className="text-lg text-slate-600">par {livre.auteur}</p>
+          <p className="text-lg text-slate-600">{t('fiche.par')} {livre.auteur}</p>
 
           {livre.categorie && (
             <span className="inline-block text-sm bg-indigo-50 text-indigo-800 px-3 py-1 rounded">
@@ -70,7 +71,9 @@ export default async function FicheLivrePage({
           </p>
 
           <p className={livre.stock > 0 ? 'text-green-700' : 'text-red-600'}>
-            {livre.stock > 0 ? `En stock (${livre.stock} disponibles)` : 'Rupture de stock'}
+            {livre.stock > 0
+              ? `${t('fiche.enStock')} (${livre.stock} ${t('fiche.disponibles')})`
+              : t('fiche.ruptureStock')}
           </p>
 
           {livre.description && (
@@ -80,15 +83,15 @@ export default async function FicheLivrePage({
           )}
 
           <BoutonAjouterPanier
-  livre={{
-    id: livre.id,
-    titre: livre.titre,
-    auteur: livre.auteur,
-    prix: livre.prix,
-    couverture: livre.couverture,
-  }}
-  stock={livre.stock}
-/>
+            livre={{
+              id: livre.id,
+              titre: livre.titre,
+              auteur: livre.auteur,
+              prix: livre.prix,
+              couverture: livre.couverture,
+            }}
+            stock={livre.stock}
+          />
         </div>
       </div>
     </div>

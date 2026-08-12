@@ -2,6 +2,7 @@
 
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   livre: {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function BoutonAjouterPanier({ livre, stock }: Props) {
+  const t = useTranslations();
   const { addToCart } = useCart();
   const [ajoute, setAjoute] = useState(false);
 
@@ -30,7 +32,7 @@ export function BoutonAjouterPanier({ livre, stock }: Props) {
       disabled={stock === 0}
       className="bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-8 py-3 rounded-md font-medium transition-colors mt-4"
     >
-      {ajoute ? 'Ajouté au panier ✓' : 'Ajouter au panier'}
+      {ajoute ? `${t('fiche.ajoute')} ✓` : t('fiche.ajouterPanier')}
     </button>
   );
 }

@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '../../context/AuthContext';
 
 export default function ConnexionPage() {
+  const t = useTranslations();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erreur, setErreur] = useState('');
@@ -21,7 +23,7 @@ export default function ConnexionPage() {
       await login(email, password);
       router.push('/');
     } catch (err) {
-      setErreur('Email ou mot de passe incorrect');
+      setErreur(t('connexion.erreur'));
     } finally {
       setChargement(false);
     }
@@ -30,13 +32,13 @@ export default function ConnexionPage() {
   return (
     <div className="container mx-auto px-4 py-16 bg-white min-h-screen max-w-md">
       <h1 className="text-3xl font-serif font-semibold text-indigo-950 mb-8">
-        Connexion
+        {t('connexion.titre')}
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
-            Adresse e-mail
+            {t('connexion.email')}
           </label>
           <input
             type="email"
@@ -49,7 +51,7 @@ export default function ConnexionPage() {
 
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">
-            Mot de passe
+            {t('connexion.motDePasse')}
           </label>
           <input
             type="password"
@@ -67,7 +69,7 @@ export default function ConnexionPage() {
           disabled={chargement}
           className="w-full bg-indigo-900 hover:bg-indigo-800 disabled:bg-slate-300 text-white px-6 py-3 rounded-md font-medium transition-colors"
         >
-          {chargement ? 'Connexion...' : 'Se connecter'}
+          {chargement ? '...' : t('connexion.seConnecter')}
         </button>
       </form>
     </div>
