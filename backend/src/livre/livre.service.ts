@@ -14,16 +14,30 @@ export class LivreService {
   async create(createLivreDto: CreateLivreDto) {
   const livre = await this.prisma.livre.create({ data: createLivreDto });
 
-  // Génération du résumé IA en arrière-plan, sans bloquer la réponse
   this.iaService
     .genererResume(livre.titre, livre.auteur, livre.description || '')
-    .then((resume) => {
-      if (resume) {
-        return this.prisma.livre.update({
-          where: { id: livre.id },
-          data: { resumeIA: resume },
-        });
-      }
+    .then(async (resume) => {
+      if (!resume) return;
+
+      await this.prisma.livre.update({
+        where: { id: livre.id },
+        data: { resumeIA: resume },
+      });
+
+      const [traductionEn, traductionAr] = await Promise.all([
+        this.iaService.traduireLivre(livre.titre, resume, 'en'),
+        this.iaService.traduireLivre(livre.titre, resume, 'ar'),
+      ]);
+
+      await this.prisma.livre.update({
+        where: { id: livre.id },
+        data: {
+          titreEn: traductionEn?.titre,
+          resumeEn: traductionEn?.resume,
+          titreAr: traductionAr?.titre,
+          resumeAr: traductionAr?.resume,
+        },
+      });
     })
     .catch(() => {
       // Le livre reste publié même si l'IA échoue, comme prévu dans les règles de gestion
@@ -31,6 +45,7 @@ export class LivreService {
 
   return livre;
 }
+
   findAll(params: { recherche?: string; categorieId?: number; page?: number; limit?: number }) {
   const { recherche, categorieId, page = 1, limit = 20 } = params;
 

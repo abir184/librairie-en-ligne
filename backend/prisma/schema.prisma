@@ -19,17 +19,21 @@ model Categorie {
 }
 
 model Livre {
-  id          Int          @id @default(autoincrement())
-  titre       String
-  auteur      String
-  prix        Float
-  stock       Int          @default(0)
-  description String?
-  couverture  String?
-  resumeIA    String?
-  createdAt   DateTime     @default(now())
-  categorieId Int?
-  categorie   Categorie?   @relation(fields: [categorieId], references: [id])
+  id           Int          @id @default(autoincrement())
+  titre        String
+  auteur       String
+  prix         Float
+  stock        Int          @default(0)
+  description  String?
+  couverture   String?
+  resumeIA     String?
+  titreEn      String?
+  resumeEn     String?
+  titreAr      String?
+  resumeAr     String?
+  createdAt    DateTime     @default(now())
+  categorieId  Int?
+  categorie    Categorie?   @relation(fields: [categorieId], references: [id])
   lignesCommande LigneCommande[]
 }
 
