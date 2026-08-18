@@ -12,6 +12,7 @@ import { join } from 'path';
 import { IaModule } from './ia/ia.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { AvisModule } from './avis/avis.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { APP_GUARD } from '@nestjs/core';
       ttl: 60000,
       limit: 30,
     }]),
+    AvisModule,
   ],
   controllers: [AppController],
   providers: [

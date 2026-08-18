@@ -35,6 +35,7 @@ model Livre {
   categorieId  Int?
   categorie    Categorie?   @relation(fields: [categorieId], references: [id])
   lignesCommande LigneCommande[]
+    avis      Avis[]
 }
 
 model Client {
@@ -47,6 +48,7 @@ model Client {
   createdAt DateTime   @default(now())
 
   commandes Commande[]
+    avis      Avis[]
 }
 
 model Commande {
@@ -70,4 +72,18 @@ model LigneCommande {
 
   livreId     Int
   livre       Livre    @relation(fields: [livreId], references: [id])
+}
+
+model Avis {
+  id         Int      @id @default(autoincrement())
+  note       Int
+  commentaire String?
+  approuve   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  clientId   Int
+  client     Client   @relation(fields: [clientId], references: [id])
+
+  livreId    Int
+  livre      Livre    @relation(fields: [livreId], references: [id])
 }
