@@ -1,17 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { IaService } from './ia.service';
+import { Controller } from '@nestjs/common';
 
 @Controller('ia')
-export class IaController {
-  constructor(private iaService: IaService) {}
-
-  @Get('test-resume')
-  async testResume(
-    @Query('titre') titre: string,
-    @Query('auteur') auteur: string,
-    @Query('description') description: string,
-  ) {
-    const resume = await this.iaService.genererResume(titre, auteur, description);
-    return { resume };
-  }
-}
+export class IaController {}

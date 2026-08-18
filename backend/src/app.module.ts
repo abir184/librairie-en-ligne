@@ -10,13 +10,34 @@ import { AuthModule } from './auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { IaModule } from './ia/ia.module';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [LivreModule, PrismaModule, CategorieModule, ClientModule, CommandeModule, AuthModule , ServeStaticModule.forRoot({
-  rootPath: join(process.cwd(), 'uploads'),
-  serveRoot: '/uploads',
-}), IaModule,],
+  imports: [
+    LivreModule,
+    PrismaModule,
+    CategorieModule,
+    ClientModule,
+    CommandeModule,
+    AuthModule,
+    IaModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'),
+      serveRoot: '/uploads',
+    }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 30,
+    }]),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
