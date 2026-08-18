@@ -3,6 +3,22 @@ import { notFound } from 'next/navigation';
 import { BoutonAjouterPanier } from '../../../components/BoutonAjouterPanier';
 import { getTranslations } from 'next-intl/server';
 
+interface Avis {
+  id: number;
+  note: number;
+  commentaire: string | null;
+  createdAt: string;
+  client: { nom: string };
+}
+
+async function getAvis(livreId: string): Promise<Avis[]> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/avis/livre/${livreId}`, {
+    cache: 'no-store',
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
 interface Livre {
   id: number;
   titre: string;
@@ -30,6 +46,7 @@ export default async function FicheLivrePage({
   const t = await getTranslations();
   const { id } = await params;
   const livre = await getLivre(id);
+  const avis = await getAvis(id);
 
   if (!livre) {
     notFound();
@@ -93,6 +110,25 @@ export default async function FicheLivrePage({
             stock={livre.stock}
           />
         </div>
+      </div>
+
+      <div className="mt-12 pt-8 border-t border-slate-200">
+        <h2 className="text-2xl font-serif font-semibold text-indigo-950 mb-6">Avis clients</h2>
+        {avis.length === 0 ? (
+          <p className="text-slate-500">Aucun avis pour le moment.</p>
+        ) : (
+          <div className="space-y-4">
+            {avis.map((a) => (
+              <div key={a.id} className="border border-slate-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium text-slate-900">{a.client.nom}</span>
+                  <span className="text-amber-500">{'★'.repeat(a.note)}{'☆'.repeat(5 - a.note)}</span>
+                </div>
+                {a.commentaire && <p className="text-slate-600 text-sm">{a.commentaire}</p>}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
