@@ -36,6 +36,7 @@ model Livre {
   categorie    Categorie?   @relation(fields: [categorieId], references: [id])
   lignesCommande LigneCommande[]
     avis      Avis[]
+      favoris   Favori[]
 }
 
 model Client {
@@ -49,6 +50,7 @@ model Client {
 
   commandes Commande[]
     avis      Avis[]
+      favoris   Favori[]
 }
 
 model Commande {
@@ -86,4 +88,16 @@ model Avis {
 
   livreId    Int
   livre      Livre    @relation(fields: [livreId], references: [id])
+}
+model Favori {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  clientId  Int
+  client    Client   @relation(fields: [clientId], references: [id])
+
+  livreId   Int
+  livre     Livre    @relation(fields: [livreId], references: [id])
+
+  @@unique([clientId, livreId])
 }

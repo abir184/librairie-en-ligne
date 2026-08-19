@@ -75,6 +75,9 @@ export default function ComptePage() {
         <h1 className="text-3xl font-serif font-semibold text-indigo-950">
           {t('compte.titre')}
         </h1>
+        <Link href="/favoris" className="text-sm text-indigo-700 hover:underline mr-4">
+  Mes favoris
+</Link>
         <button
           onClick={logout}
           className="text-sm text-red-600 hover:text-red-700"

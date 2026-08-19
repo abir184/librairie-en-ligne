@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BoutonAjouterPanier } from '../../../components/BoutonAjouterPanier';
 import { getTranslations } from 'next-intl/server';
-
+import { BoutonFavori } from '../../../components/BoutonFavori';
 interface Avis {
   id: number;
   note: number;
@@ -99,16 +99,19 @@ export default async function FicheLivrePage({
             </p>
           )}
 
-          <BoutonAjouterPanier
-            livre={{
-              id: livre.id,
-              titre: livre.titre,
-              auteur: livre.auteur,
-              prix: livre.prix,
-              couverture: livre.couverture,
-            }}
-            stock={livre.stock}
-          />
+          <div className="flex gap-3">
+  <BoutonAjouterPanier
+    livre={{
+      id: livre.id,
+      titre: livre.titre,
+      auteur: livre.auteur,
+      prix: livre.prix,
+      couverture: livre.couverture,
+    }}
+    stock={livre.stock}
+  />
+  <BoutonFavori livreId={livre.id} />
+</div>
         </div>
       </div>
 
@@ -118,6 +121,7 @@ export default async function FicheLivrePage({
           <p className="text-slate-500">Aucun avis pour le moment.</p>
         ) : (
           <div className="space-y-4">
+            
             {avis.map((a) => (
               <div key={a.id} className="border border-slate-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">

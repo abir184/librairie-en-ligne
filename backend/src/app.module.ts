@@ -13,6 +13,7 @@ import { IaModule } from './ia/ia.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { AvisModule } from './avis/avis.module';
+import { FavorisModule } from './favoris/favoris.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AvisModule } from './avis/avis.module';
       limit: 30,
     }]),
     AvisModule,
+    FavorisModule,
   ],
   controllers: [AppController],
   providers: [
