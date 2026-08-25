@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 interface Livre {
@@ -49,17 +50,19 @@ export default async function CataloguePage({
   href={`/livre/${livre.id}`}
   className="border border-slate-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow block"
 >
-              <div className="bg-slate-100 h-48 flex items-center justify-center text-slate-400 text-sm">
-                {livre.couverture ? (
-                  <img
-                    src={`http://localhost:3001${livre.couverture}`}
-                    alt={livre.titre}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  t('catalogue.pasDeCouverture')
-                )}
-              </div>
+              <div className="bg-slate-100 h-48 relative flex items-center justify-center text-slate-400 text-sm">
+  {livre.couverture ? (
+    <Image
+      src={`http://localhost:3001${livre.couverture}`}
+      alt={livre.titre}
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 50vw, 25vw"
+    />
+  ) : (
+    'Pas de couverture'
+  )}
+</div>
               <div className="p-4 space-y-1">
                 <h3 className="font-semibold text-slate-900 line-clamp-2">{livre.titre}</h3>
                 <p className="text-sm text-slate-500">par {livre.auteur}</p>

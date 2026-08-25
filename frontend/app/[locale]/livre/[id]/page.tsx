@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { BoutonAjouterPanier } from '../../../components/BoutonAjouterPanier';
 import { getTranslations } from 'next-intl/server';
@@ -59,18 +60,19 @@ export default async function FicheLivrePage({
       </Link>
 
       <div className="grid md:grid-cols-2 gap-12">
-        <div className="bg-slate-100 rounded-lg h-96 flex items-center justify-center text-slate-400">
-          {livre.couverture ? (
-            <img
-              src={`http://localhost:3001${livre.couverture}`}
-              alt={livre.titre}
-              className="w-full h-full object-cover rounded-lg"
-            />
-          ) : (
-            t('catalogue.pasDeCouverture')
-          )}
-        </div>
-
+        <div className="bg-slate-100 rounded-lg h-96 relative flex items-center justify-center text-slate-400">
+  {livre.couverture ? (
+    <Image
+      src={`http://localhost:3001${livre.couverture}`}
+      alt={livre.titre}
+      fill
+      className="object-cover rounded-lg"
+      sizes="(max-width: 768px) 100vw, 50vw"
+    />
+  ) : (
+    t('catalogue.pasDeCouverture')
+  )}
+</div>
         <div className="space-y-4">
           <h1 className="text-3xl font-serif font-semibold text-indigo-950">
             {livre.titre}
