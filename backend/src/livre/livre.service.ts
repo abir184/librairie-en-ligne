@@ -70,7 +70,16 @@ export class LivreService {
     orderBy: { createdAt: 'desc' },
   });
 }
+async statsParCategorie() {
+  const categories = await this.prisma.categorie.findMany({
+    include: { _count: { select: { livres: true } } },
+  });
 
+  return categories.map((cat) => ({
+    nom: cat.nom,
+    nombreLivres: cat._count.livres,
+  }));
+}
   findOne(id: number) {
     return this.prisma.livre.findUnique({
       where: { id },

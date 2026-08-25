@@ -19,7 +19,7 @@ export function Footer() {
         </div>
         <div>
           <h4 className="font-semibold mb-2">Contact</h4>
-          <p className="text-sm text-slate-300">+216 71 000 000</p>
+          <p className="text-sm text-slate-300" dir="ltr">+216 71 000 000</p>
           <p className="text-sm text-slate-300">Tunis, Tunisie</p>
         </div>
       </div>

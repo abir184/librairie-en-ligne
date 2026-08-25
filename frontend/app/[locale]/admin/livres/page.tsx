@@ -50,12 +50,20 @@ export default function AdminLivresPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h2 className="font-semibold text-xl text-slate-900">Gestion des livres</h2>
-        <Link
-          href="/admin/livres/nouveau"
-          className="bg-indigo-900 hover:bg-indigo-800 text-white px-4 py-2 rounded-md text-sm font-medium"
-        >
-          + Ajouter un livre
-        </Link>
+        <div className="flex items-center">
+          <a
+            href={`${process.env.NEXT_PUBLIC_API_URL}/livre/export-csv`}
+            className="border border-slate-300 text-slate-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-slate-50 mr-3"
+          >
+            Exporter en CSV
+          </a>
+          <Link
+            href="/admin/livres/nouveau"
+            className="bg-indigo-900 hover:bg-indigo-800 text-white px-4 py-2 rounded-md text-sm font-medium"
+          >
+            + Ajouter un livre
+          </Link>
+        </div>
       </div>
 
       <div className="space-y-2">

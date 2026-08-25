@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import { Link } from '../../i18n/navigation';
 
 export default function Home() {
   const t = useTranslations('accueil');
@@ -19,9 +20,12 @@ export default function Home() {
           <p className="text-lg text-slate-600 mb-8">
             {t('sousTitre')}
           </p>
-          <button className="bg-indigo-900 hover:bg-indigo-800 text-white px-8 py-3 rounded-md font-medium transition-colors">
+          <Link
+            href="/catalogue"
+            className="inline-block bg-indigo-900 hover:bg-indigo-800 text-white px-8 py-3 rounded-md font-medium transition-colors"
+          >
             {t('bouton')}
-          </button>
+          </Link>
         </div>
       </section>
     </div>

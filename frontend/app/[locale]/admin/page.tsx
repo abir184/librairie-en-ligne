@@ -1,3 +1,4 @@
+import { GraphiqueCategories } from '../../components/GraphiqueCategories';
 interface DashboardStats {
   commandesDuJour: number;
   chiffreAffairesMois: number;
@@ -56,6 +57,7 @@ export default async function AdminDashboardPage() {
           </div>
         )}
       </div>
+      <GraphiqueCategories />
     </div>
   );
 }

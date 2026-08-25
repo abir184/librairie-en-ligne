@@ -8,7 +8,8 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { Query } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
-
+import { Res } from '@nestjs/common';
+import type { Response } from 'express';
 // ...
 
 @ApiQuery({ name: 'recherche', required: false })
@@ -24,7 +25,10 @@ export class LivreController {
   create(@Body() createLivreDto: CreateLivreDto) {
     return this.livreService.create(createLivreDto);
   }
-
+@Get('stats-categories')
+statsParCategorie() {
+  return this.livreService.statsParCategorie();
+}
   @Get()
 findAll(
   @Query('recherche') recherche?: string,
@@ -39,7 +43,25 @@ findAll(
     limit: limit ? +limit : undefined,
   });
 }
+@Get('export-csv')
+async exportCsv(@Res() res: Response) {
+  const livres = await this.livreService.findAll({ limit: 1000 });
 
+  const entetes = 'ID,Titre,Auteur,Prix,Stock,Categorie\n';
+  const lignes = livres
+    .map((l) => {
+      const categorie = l.categorie?.nom || '';
+      const titre = l.titre.replace(/"/g, '""');
+      return `${l.id},"${titre}","${l.auteur}",${l.prix},${l.stock},"${categorie}"`;
+    })
+    .join('\n');
+
+  const csv = entetes + lignes;
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="catalogue.csv"');
+  res.send('\uFEFF' + csv);
+}
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.livreService.findOne(+id);
